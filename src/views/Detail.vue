@@ -10,7 +10,7 @@
 		<div v-if="book.characters" class="text-h6">
 			Broj likova: {{ book.characters.length }}
 		</div>
-		<v-btn @click="redirectToHome">Vrati me</v-btn>
+		<v-btn color="error" @click="redirectToHome">Vrati me</v-btn>
 	</v-container>
 </template>
 
