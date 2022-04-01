@@ -1,18 +1,52 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<v-container>
+		<div class="text-h3 text-center">Knjige</div>
+		<v-card
+			class="my-5"
+			elevation="3"
+			v-for="(book, index) in books"
+			:key="book.isbn"
+		>
+			<v-card-title>
+				<router-link :to="{ name: 'Detail', params: { id: index + 1 } }">
+					{{ book.name }}
+				</router-link>
+			</v-card-title>
+			<v-card-subtitle>
+				{{ book.authors[0] }}
+			</v-card-subtitle>
+			<v-card-text>{{ new Date(book.released).toDateString() }}</v-card-text>
+			<v-card-text>{{ book.url }}</v-card-text>
+		</v-card>
+	</v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import axios from "axios";
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+	name: "Home",
+	data() {
+		return {
+			books: [],
+			loading: true,
+		};
+	},
+	mounted() {
+		this.fetchBooks();
+	},
+	methods: {
+		async fetchBooks() {
+			console.log("test");
+			const res = await axios.get(
+				"https://www.anapioficeandfire.com/api/books",
+				{
+					_limit: 10,
+				}
+			);
+			console.log(res.data);
+			this.books = res.data;
+			this.loading = false;
+		},
+	},
+};
 </script>
