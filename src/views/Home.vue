@@ -1,14 +1,9 @@
 <template>
 	<v-container>
 		<div class="text-h3 text-center">Knjige</div>
-		<v-card
-			class="my-5"
-			elevation="3"
-			v-for="(book, index) in books"
-			:key="book.isbn"
-		>
+		<v-card class="my-5" elevation="3" v-for="book in books" :key="book.isbn">
 			<v-card-title>
-				<router-link :to="{ name: 'Detail', params: { id: index + 1 } }">
+				<router-link :to="{ name: 'Detail', params: { id: book.isbn } }">
 					{{ book.name }}
 				</router-link>
 			</v-card-title>
@@ -37,12 +32,7 @@ export default {
 	methods: {
 		async fetchBooks() {
 			console.log("test");
-			const res = await axios.get(
-				"https://www.anapioficeandfire.com/api/books",
-				{
-					_limit: 10,
-				}
-			);
+			const res = await axios.get("http://localhost:5000");
 			console.log(res.data);
 			this.books = res.data;
 			this.loading = false;

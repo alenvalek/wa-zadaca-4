@@ -3,7 +3,7 @@
 		<div class="text-h3">{{ book.name }}</div>
 		<div class="text-h6">ISBN: {{ book.isbn }}</div>
 		<div class="text-h6" v-for="(author, index) in book.authors" :key="author">
-			Autor {{ index + 1 }}: {{ author ? author : "-" }}
+			Autor {{ index + 1 }}. : {{ author ? author : "-" }}
 		</div>
 		<div class="text-h6">Izdavač: {{ book.publisher }}</div>
 		<div class="text-h6">Zemlja podrijetla: {{ book.country }}</div>
@@ -31,9 +31,7 @@ export default {
 		async fetchBookDetails() {
 			const id = this.$route.params.id;
 			console.log(id);
-			const res = await axios.get(
-				`https://www.anapioficeandfire.com/api/books/${id}`
-			);
+			const res = await axios.get(`http://localhost:5000/${id}`);
 			this.book = res.data;
 		},
 		redirectToHome() {
